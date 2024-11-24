@@ -15,7 +15,6 @@ h2 {
 table {
     border: 1px solid red;
     padding: 2px;
-    font-size: xx-large;
 }
  
 th {
@@ -25,4 +24,12 @@ th {
 td {
     padding: 5px;
     border: 1px solid blue;
+}
+
+form {
+    padding: 10px;
+}
+
+table {
+    margin: 10px;
 }
