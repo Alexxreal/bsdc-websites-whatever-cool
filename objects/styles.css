@@ -13,17 +13,14 @@ h2 {
 }
  
 table {
-    border: 1px solid red;
-    padding: 2px;
+    border-collapse: collapse;
+    width: 50%;
 }
- 
-th {
-    border: 2px solid green;
-}
- 
-td {
-    padding: 5px;
-    border: 1px solid blue;
+th, td {
+    border: 1px solid black;
+    padding: 10px;
+    text-align: center;
+    cursor: pointer; /* Makes the cells look clickable */
 }
 
 form {

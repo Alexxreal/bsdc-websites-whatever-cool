@@ -9,11 +9,13 @@ const gameList = [
 
 const listNames = ["name", "console", "franchise"]
 
-const softCodedList = document.getElementById('table')
-const listMakerTable = document.getElementById('tableDiy')
-const tBodyDiy = document.getElementById('tBodyDiy')
-const listMakerTableHeader = document.getElementById('headerRowDiy')
-const valuesInputBox = document.getElementById("inputBoxesValues")
+const softCodedList = document.getElementById('table') // soft coded table variable
+
+const listMakerTable = document.getElementById('tableDiy') // gets the whole table div of the diy table maker
+const tBodyDiy = document.getElementById('tBodyDiy') // gets the tbody div of the diy table maker
+const listMakerTableHeader = document.getElementById('headerRowDiy') // gets the row for the header of the DIY table maker
+const valuesInputBox = document.getElementById("inputBoxesValues") // gets the div for the input box(es)
+var selectedCell
 
 //soft coded
 
@@ -35,12 +37,13 @@ for (x = 0; x < gameList.length; x++) {
 
 function newHeader(event) {
     event.preventDefault();
-    const newHeader = document.createElement('th')
-    const header = document.getElementById("headerId").value;
+    const newHeader = document.createElement('th') // table header element to append to the table
+    const header = document.getElementById("headerId").value; // gets the text box contents
 
     newHeader.innerHTML = header
+    newHeader.setAttribute(`onclick`, "test(event)");
     listMakerTableHeader.appendChild(newHeader) 
-    valuesInputBox.innerHTML += `<input type="text" id="valuesId` + (listMakerTableHeader.childElementCount - 1) + `" name="` + header + `" placeholder="add to `+ header +`"> <br>`
+    valuesInputBox.innerHTML += `<input type="text" value="test" id="valuesId0-` + (listMakerTableHeader.childElementCount - 1) + `" name="` + header + `" placeholder="add to `+ header +`"> <br>`
 }
 
 function newValues(event) {
@@ -48,10 +51,24 @@ function newValues(event) {
     var newRow = document.createElement('tr')
     for (x = 0; x < listMakerTableHeader.childElementCount; x++) {
         var newElement = document.createElement('td')
-        var row = document.getElementById("valuesId"+ x).value;
+        newElement.setAttribute(`onclick`, "test(event)");
+        var row = document.getElementById("valuesId0-"+ x).value;
         newElement.innerHTML = row
         newRow.appendChild(newElement);
     }
     tBodyDiy.appendChild(newRow)
 
+}
+
+function test(event) {
+    if (selectedCell != null) {
+    selectedCell.style.backgroundColor="white";
+    selectedCell.style.color="black";
+    }
+
+    selectedCell = event.target
+
+    console.log(selectedCell + " selected")
+    event.target.style.backgroundColor="black";
+    event.target.style.color="white";
 }
