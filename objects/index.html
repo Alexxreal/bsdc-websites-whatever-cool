@@ -50,12 +50,16 @@
 
     <h2>o(*￣▽￣*)ブ</h2>  
 
+<div class="grid">
+    <div class="header">
     <form onsubmit="newHeader(event)">
         <label for="newHeader">New header</label> <br>
         <input type="text" id="headerId" name="headerName"> <br><br>
         <button type="submit">Submit</button>
     </form>
+    </div>
 
+    <div class="values">
     <form onsubmit="newValues(event)">
         <label for="newValues">New values</label> <br>
         <br>
@@ -65,6 +69,26 @@
         <br>
         <button type="submit">Submit</button>
     </form>
+    </div>
+
+    <div class="controls">
+    
+    <form onsubmit="changeText(event)">
+        <br>
+        <label for="changeText">Change text</label>
+        <br>
+        <input type="text" id="changeTextId" name="changeTextName">
+        <br>
+        <br>
+        <button id="changeTextButton" type="submit">Change</button>
+    </form>
+
+    <br>
+    <button onclick="deleteCell()" id="deleteCell" disabled>Delete cell</button>
+    <button onclick="deselectCell()" id="deselectCell" disabled>Deselect cell</button>
+
+    </div>
+</div>
 
 <!-- Diy table -->
 

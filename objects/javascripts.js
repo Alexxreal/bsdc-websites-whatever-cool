@@ -15,7 +15,11 @@ const listMakerTable = document.getElementById('tableDiy') // gets the whole tab
 const tBodyDiy = document.getElementById('tBodyDiy') // gets the tbody div of the diy table maker
 const listMakerTableHeader = document.getElementById('headerRowDiy') // gets the row for the header of the DIY table maker
 const valuesInputBox = document.getElementById("inputBoxesValues") // gets the div for the input box(es)
-var selectedCell
+
+const deleteCellButton = document.getElementById("deleteCell")
+const deselectCellButton = document.getElementById("deselectCell")
+const changeTextButton = document.getElementById("changeTextButton")
+var selectedCells = []
 
 //soft coded
 
@@ -43,7 +47,8 @@ function newHeader(event) {
     newHeader.innerHTML = header
     newHeader.setAttribute(`onclick`, "test(event)");
     listMakerTableHeader.appendChild(newHeader) 
-    valuesInputBox.innerHTML += `<input type="text" value="test" id="valuesId0-` + (listMakerTableHeader.childElementCount - 1) + `" name="` + header + `" placeholder="add to `+ header +`"> <br>`
+    valuesInputBox.innerHTML += `<input type="text" id="valuesId0-` + (listMakerTableHeader.childElementCount - 1) + `" name="` + header + `" placeholder="add to `+ header +`"> <br>`
+    update()
 }
 
 function newValues(event) {
@@ -57,18 +62,86 @@ function newValues(event) {
         newRow.appendChild(newElement);
     }
     tBodyDiy.appendChild(newRow)
-
+    update()
 }
 
 function test(event) {
-    if (selectedCell != null) {
-    selectedCell.style.backgroundColor="white";
-    selectedCell.style.color="black";
+
+    for (x = 0; x < selectedCells.length; x++) {
+        if (selectedCells[x] == event.target) {
+            selectedCells[x].style.backgroundColor="white";
+            selectedCells[x].style.color="black";
+            selectedCells.splice(x, 1);
+            update()
+            return
+        }
     }
-
-    selectedCell = event.target
-
-    console.log(selectedCell + " selected")
+    
+    selectedCells.push(event.target)
     event.target.style.backgroundColor="black";
     event.target.style.color="white";
+    update()
+}
+
+function deleteCell() {
+    for (x = 0; x < selectedCells.length; x++) {
+        selectedCells[x].innerHTML = ``
+    }
+    update()
+}
+
+function deselectCell() {
+    for (x = 0; x < selectedCells.length; x++) {
+        selectedCells[x].style.backgroundColor="white";
+        selectedCells[x].style.color="black";     
+    }
+    selectedCells.splice(0, selectedCells.length);
+    update()   
+}
+
+function changeText(event) {
+    event.preventDefault();
+    const text = document.getElementById("changeTextId").value;
+
+    for (x = 0; x < selectedCells.length; x++) {
+        selectedCells[x].innerHTML = text 
+    }
+    update()
+}
+
+function update() {
+    var selectedEmpty = true;
+    for (x = 0; x < selectedCells.length; x++) {
+        if (selectedCells[x].innerHTML != "") {
+            selectedEmpty = false
+            console.log(selectedCells[x])
+        } 
+    }
+
+    if (selectedEmpty == true) {
+        deleteCellButton.disabled = true;
+    }
+    else {
+        deleteCellButton.disabled = false;
+        deselectCellButton.disabled = false;
+    }
+
+    if (selectedCells.length == 0) {
+        deselectCellButton.disabled = true;
+    }
+
+
+    if (selectedCells.length > 1) {
+        deselectCellButton.innerHTML = `Deselect cells`
+    }
+    else {
+        deselectCellButton.innerHTML = `Deselect cell`
+    }
+
+    if (selectedCells.length > 1) {
+        deleteCellButton.innerHTML = `Delete cells`
+    }
+    else {
+        deleteCellButton.innerHTML = `Delete cell`
+    }
 }
